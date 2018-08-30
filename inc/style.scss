@@ -1,0 +1,125 @@
+.scss_body {
+    color: #484c55;
+    .title {
+        margin-bottom: 10px;
+    }
+    .display-none {
+        display: none;
+    }
+    .toolbar {
+        margin-bottom: 10px;
+        width: 511px;
+        &__activate-checkbox {
+            margin: 0;
+            transform: translateY(2px);
+        }
+    }
+    .toolbar__button {
+        margin-right: 5px;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+    .groups {
+        width: 511px;
+    }
+    .group {
+        border: 1px solid #ebebeb;
+        padding: 5px;
+        margin-bottom: 5px;
+        position: relative;
+        padding-right: 32px;
+        background: #f8f8f8;
+        border-radius: 4px;
+    }
+    .button {
+        background-color: #c69;
+        border-color: #c6538c;
+        color: #fff;
+        cursor: pointer;
+        border: 0;
+        border-radius: 4px;
+        line-height: 32px;
+        padding: 0 15px;
+        display: inline-block;
+        font-size: 11px;
+        width: 167px;
+        text-align: center;
+        text-transform: uppercase;
+        box-sizing: border-box;
+        &:hover {
+            background-color: #c24785;
+        }
+    }
+    .group__angle {
+        display: inline-block;
+        border: 1px solid #c8c8c8;
+        border-left: 0;
+        border-bottom: 0;
+        transform: rotate(45deg);
+        height: 10px;
+        width: 10px;
+        margin-right: 5px;
+    }
+    .group__input-select {
+        width: 160px;
+    }
+    .group__output-label::after {
+        content: '.css';
+        display: inline-block;
+    }
+    .group__minify-checkbox:checked ~ .group__output-label::after {
+        content: '.min.css';
+    }
+    .group__minify-checkbox {
+        float: right;
+        margin-top: 6px;
+        cursor: pointer;
+        margin-right: 0;
+    }
+    .group__minify-label {
+        float: right;
+        margin-top: 4px;
+        cursor: pointer;
+        padding-left: 4px;
+    }
+    label {
+        user-select: none;
+        -moz-user-select: none;
+    }
+    .group__delete-button {
+        display: block;
+        border: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
+        cursor: pointer;
+        width: 22px;
+        text-align: center;
+        padding: 0;
+        border-radius: 0;
+        background-color: #ebebeb;
+    }
+    .group__delete-button:hover {
+        background-color: #e0e0e0;
+    }
+    .new-group-tmpl {
+        visibility: hidden;
+        height: 0;
+        overflow: hidden;
+    }
+    .group__output {
+        border: 0;
+        border-bottom: 1px solid #afafaf;
+        background: transparent;
+        &:focus {
+            border-bottom-color: #c6538c;
+        }
+    }
+    .error-log {
+        color: #c69;
+        font-weight: 700;
+    }
+}
