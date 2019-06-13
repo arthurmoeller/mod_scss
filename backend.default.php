@@ -5,10 +5,10 @@
 // ----------------------------------------------------------------
 // obligate check for phpwcms constants
 if (!defined('PHPWCMS_ROOT')) {
-   die("You Cannot Access This Script Directly, Have a Nice Day.");
+    die("You Cannot Access This Script Directly, Have a Nice Day.");
 }
 // ----------------------------------------------------------------
-	
+
 // put translation back to have easier access to it - use it as relation
 $BLM = & $BL['modules']['scss'];
 
@@ -33,7 +33,7 @@ echo '<script src="'.$phpwcms['modules'][$module]['dir'].'inc/js/jquery.min.js">
 echo '<script src="'.$phpwcms['modules'][$module]['dir'].'inc/js/script.js"></script>';
 
 if(isset($_POST['mod-scss__form'])) {
-    
+
     // write groups from post data to json file
     if(isset($_POST['mod-scss__groups'])) {
         file_put_contents($modpath.'inc/groups.json',json_encode($_POST['mod-scss__groups']));
@@ -51,25 +51,32 @@ if(isset($_POST['mod-scss__form'])) {
 
 <div class="scss_body">
     <div class="title scss_title"><?php echo $BLM['backend_menu']; ?></div>
+    <div class="error-log">
+        <?php echo file_get_contents($modpath.'inc/error.log'); ?>
+    </div>
     <form action="" method="post">
 
         <input type="hidden" name="mod-scss__form">
         <input type="hidden" name="mod-scss__settings">
-        
+
         <div class="toolbar">
-                <?php
-                    $settings = json_decode(file_get_contents($modpath.'inc/settings.json'), true);
-                    global $checkboxState;
-                    if (isset($settings['activate'])) {
-                        $checkboxState = 'checked';
-                    }
-                ?>
+            <?php
+            $settings = json_decode(file_get_contents($modpath.'inc/settings.json'), true);
+            global $checkboxState;
+            if (isset($settings['activate'])) {
+                $checkboxState = 'checked';
+                rename ($modpath."_frontend.init.php_", $modpath."frontend.init.php");
+            }
+            else {
+                rename ($modpath."frontend.init.php", $modpath."_frontend.init.php_");
+            }
+            ?>
             <label for="activate-checkbox" class="button toolbar__button">
                 <input <?php echo $checkboxState; ?> id="activate-checkbox" class="toolbar__activate-checkbox" type="checkbox" name="mod-scss__settings[activate]" value="true">
                 <?php echo $BLM['scss_activateCheckbox']; ?>
-            </label><button class="button js-add-group-button toolbar__button"><?php echo $BLM['scss_addGroupButton']; ?></button><button type="submit" class="button toolbar__button"><?php echo $BLM['scss_submitButton']; ?></button>
+            </label><button class="button js-add-group-button toolbar__button"><?php echo $BLM['scss_addGroupButton']; ?></button><button type="submit" class="button toolbar__button button--save"><?php echo $BLM['scss_submitButton']; ?></button>
         </div>
-        
+
         <div class="groups">
             <?php
             // get groups from json file and create html for each
@@ -88,14 +95,11 @@ if(isset($_POST['mod-scss__form'])) {
                 }
             }
             else {
-               echo $BLM['scss_noGroupsText']; 
+                echo $BLM['scss_noGroupsText']; 
             }
             ?>
         </div>
     </form>
-    <div class="error-log">
-        <?php echo file_get_contents($modpath.'inc/error.log'); ?>
-    </div>
 
     <?php
     function createInputFileSelect($groupCounter = 0, $selectedFile = '') {
@@ -119,23 +123,23 @@ if(isset($_POST['mod-scss__form'])) {
     }
     ?>
     <?php function createGroup($groupCounter = 0, $inputFile = '', $outputFile = '', $minifyToggle = '') { ?>
-       <?php global $BLM; ?>
-        <div class="group">
-            <?php createInputFileSelect($groupCounter, $inputFile); ?>
-            <div class="group__angle"></div>
-            <label for="minify-checkbox-<?php echo $groupCounter; ?>" class="group__minify-label"><?php echo $BLM['scss_minifyCheckbox']; ?></label>
-            <?php 
-                global $checkboxState;
-                if ($minifyToggle == 'on') {
-                    $checkboxState = 'checked';
-                }
-            ?>
-            <input <?php echo $checkboxState; ?> id="minify-checkbox-<?php echo $groupCounter; ?>" type="checkbox" name="mod-scss__groups[<?php echo $groupCounter; ?>][minify]" class="group__minify-checkbox">
-            <label for="" class="group__output-label">
-                <input type="text" class="group__output" name="mod-scss__groups[<?php echo $groupCounter; ?>][output]" value="<?php echo $outputFile; ?>">
-            </label>
-            <button class="group__delete-button" title="<?php echo $BLM['scss_deleteGroupButton']; ?>">x</button>
-        </div>
+    <?php global $BLM; ?>
+    <div class="group">
+        <?php createInputFileSelect($groupCounter, $inputFile); ?>
+        <div class="group__angle"></div>
+        <label for="minify-checkbox-<?php echo $groupCounter; ?>" class="group__minify-label"><?php echo $BLM['scss_minifyCheckbox']; ?></label>
+        <?php 
+                                                                                                          global $checkboxState;
+                                                                                                          if ($minifyToggle == 'on') {
+                                                                                                              $checkboxState = 'checked';
+                                                                                                          }
+        ?>
+        <input <?php echo $checkboxState; ?> id="minify-checkbox-<?php echo $groupCounter; ?>" type="checkbox" name="mod-scss__groups[<?php echo $groupCounter; ?>][minify]" class="group__minify-checkbox">
+        <label for="" class="group__output-label">
+            <input type="text" class="group__output" name="mod-scss__groups[<?php echo $groupCounter; ?>][output]" value="<?php echo $outputFile; ?>">
+        </label>
+        <button class="group__delete-button" title="<?php echo $BLM['scss_deleteGroupButton']; ?>">x</button>
+    </div>
     <?php } ?>
 
     <?php // new group template for js ?>

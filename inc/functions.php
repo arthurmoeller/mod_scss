@@ -7,9 +7,10 @@ $modpath = $phpwcms['modules']['scss']['path'];
 $errorLogFile = $modpath.'inc/error.log';
 
 // include scss compiler
-include_once($modpath.'inc/scssphp/scss.inc.php');	
+include_once($modpath.'inc/scssphp/scss.inc.php');
 use Leafo\ScssPhp\Compiler;
 $scss = new Compiler();
+$scss->setImportPaths(PHPWCMS_TEMPLATE.'inc_scss/');
 
 // compile scss file to css file
 function compileFile($inputFile, $outputFile, $formatter) {
@@ -29,7 +30,7 @@ function compileFile($inputFile, $outputFile, $formatter) {
 
         // write exception to log file
         $inputFileName = trim(substr($inputFile, strrpos($inputFile, '/') + 1)); // trim directory
-        $errorMessage = 'SCSS error in file: '.$inputFileName;
+        $errorMessage = $inputFileName.' '.$e->getMessage();
         echo '<script>console.error("'.$errorMessage.'");</script>';
         file_put_contents($errorLogFile, $errorMessage);
     }

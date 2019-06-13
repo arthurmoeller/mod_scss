@@ -50,6 +50,12 @@
         &:hover {
             background-color: #c24785;
         }
+        &--save {
+            background-color: #5cb153;
+            &:hover {
+                background-color: #3ea451;
+            }
+        }
     }
     .group__angle {
         display: inline-block;
@@ -119,7 +125,13 @@
         }
     }
     .error-log {
-        color: #c69;
         font-weight: 700;
+        color: #fff;
+        background: #c20000;
+        margin-bottom: 10px;
+        line-height: 32px;
+        padding: 0 15px;
+        width: 511px;
+        box-sizing: border-box;
     }
 }
