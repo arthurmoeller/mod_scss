@@ -133,6 +133,9 @@ if(isset($_POST['mod-scss__form'])) {
                                                                                                           if ($minifyToggle == 'on') {
                                                                                                               $checkboxState = 'checked';
                                                                                                           }
+                                                                                                          else {
+                                                                                                              $checkboxState = '';
+                                                                                                          }
         ?>
         <input <?php echo $checkboxState; ?> id="minify-checkbox-<?php echo $groupCounter; ?>" type="checkbox" name="mod-scss__groups[<?php echo $groupCounter; ?>][minify]" class="group__minify-checkbox">
         <label for="" class="group__output-label">
