@@ -32,14 +32,14 @@ function compileFile($inputFile, $outputFile, $formatter) {
 
         // log success info
         $fileName = str_replace(PHPWCMS_TEMPLATE.'inc_scss/','', $inputFile);
-        $GLOBALS['block']['custom_htmlhead']['mod-scss_log'] = '<script>console.info("'.$fileName.' compiled");</script>';
+        $GLOBALS['block']['custom_htmlhead']['mod-scss_log'] .= '<script>console.info("'.$fileName.' compiled");</script>';
     }
     catch (\Exception $e) {
 
         // write exception to log file
         $inputFileName = trim(substr($inputFile, strrpos($inputFile, '/') + 1)); // trim directory
         $errorMessage = $inputFileName.' '.$e->getMessage();
-        $GLOBALS['block']['custom_htmlhead']['mod-scss_log'] = '<script>console.error("'.$errorMessage.'");</script>';
+        $GLOBALS['block']['custom_htmlhead']['mod-scss_log'] .= '<script>console.error("'.$errorMessage.'");</script>';
 
         file_put_contents($errorLogFile, $errorMessage);
     }
