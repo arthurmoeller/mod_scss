@@ -44,7 +44,9 @@ if(isset($_POST['mod-scss__form'])) {
 
     // write settings from post data to json file
     if(isset($_POST['mod-scss__settings'])) {
-        file_put_contents($modpath.'inc/settings.json',json_encode($_POST['mod-scss__settings']));
+        $sArray = $_POST['mod-scss__settings'];
+        $sArray['timestamp'] = time() + ($_POST['mod-scss__settings']['days'] * 86400);
+        file_put_contents($modpath.'inc/settings.json',json_encode($sArray));
     }
 }
 ?>
@@ -99,6 +101,31 @@ if(isset($_POST['mod-scss__form'])) {
             }
             ?>
         </div>
+        <div class="toolbar2">
+            <?php
+            global $checkboxState;
+            if (isset($settings['disable'])) {
+                $checkboxState = 'checked';
+            }
+            else {
+                $checkboxState = '';
+            }
+            if (isset($settings['days'])) {
+                $a = $settings['days'];
+            }
+            ?>
+            <label for="disable-checkbox" class="">
+                <input <?php echo $checkboxState; ?> id="disable-checkbox" class="toolbar2__disable-checkbox" type="checkbox" name="mod-scss__settings[disable]" value="true">
+                <?php echo $BLM['scss_disableCheckbox']; ?>
+            </label>
+            <select class="toolbar2__days" name="mod-scss__settings[days]">
+                <option <?php echo($a == 3) ? 'selected ' : '' ; ?>value="3">3</option>
+                <option <?php echo($a == 7) ? 'selected ' : '' ; ?>value="7">7</option>
+                <option <?php echo($a == 14) ? 'selected ' : '' ; ?>value="14">14</option>
+            </select>
+            <span><?php echo $BLM['scss_disableDays']; ?></span>
+
+        </div>
     </form>
 
     <?php
@@ -147,6 +174,6 @@ if(isset($_POST['mod-scss__form'])) {
 
     <?php // new group template for js ?>
     <div class="new-group-tmpl">
-        <?php createGroup('','','on'); ?>
+        <?php createGroup('','','','on'); ?>
     </div>
 </div>

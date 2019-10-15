@@ -120,6 +120,7 @@
         border: 0;
         border-bottom: 1px solid #afafaf;
         background: transparent;
+        padding: 1px 1px;
         &:focus {
             border-bottom-color: #c6538c;
         }
@@ -133,5 +134,17 @@
         padding: 0 15px;
         width: 511px;
         box-sizing: border-box;
+    }
+    .toolbar2 {
+        margin-top: 10px;
+        &__disable-checkbox {
+            margin: 0;
+            transform: translateY(2px);
+        }
+        &__days {
+            width: 50px;
+            margin: 0 5px;
+            text-align: center;
+        }
     }
 }
